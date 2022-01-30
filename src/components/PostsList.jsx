@@ -5,21 +5,15 @@ import { DataContext } from '../DataContext';
 
 
 export const PostsList = () => {
-    const { posts }= React.useContext(DataContext);
-
-    const [myPosts, setMyPosts] = React.useState(posts)
-
-    const onDelete = (id) => {
-        setMyPosts(myPosts.filter((post) => post.id !== id))
-    };
+    const { posts, deletePost }= React.useContext(DataContext);
 
     return (
         <Box mt={1}>
-            {myPosts.map((post) => 
+            {posts.map((post) => 
                 <CardPost 
                     key={post.id}
                     post={post}
-                    onDelete={onDelete}
+                    onDelete={deletePost}
                 />)}
         </Box>
     )

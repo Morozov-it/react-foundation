@@ -22,9 +22,28 @@ const data = {
   //создание контекста для данных 
 export const DataContext = React.createContext(data);
 
-export function DataContextProvider({children}) {
+export function DataContextProvider({ children }) {
+    //создание состояния для постов
+    const [posts, setPosts] = React.useState(data.posts);
+
+    //функция удаления постов
+    const deletePost = (id) => {
+        setPosts(posts.filter((post) => post.id !== id))
+    };
+    //функция добавления постов
+    const addPost = (post) => {
+        setPosts((prevPosts) => ({
+            ...prevPosts, ...post
+        }))
+    }
+
     return (
-        <DataContext.Provider value={data}>
+        <DataContext.Provider
+            value={{
+                posts,
+                deletePost,
+                addPost
+            }}>
             {children}
         </DataContext.Provider>
     )
