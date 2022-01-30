@@ -1,35 +1,21 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import CardPost from './CardPost';
+import { DataContext } from '../DataContext';
 
-const data = [
-    {
-        id: 1,
-        title: 'JavaScript',
-        body: 'JavaScript is the most usefull language'
-    },
-    {
-        id: 2,
-        title: 'Java',
-        body: 'Java is the most complex language'
-    },
-    {
-        id: 3,
-        title: 'Pyton',
-        body: 'Pyton is the most hipe language'
-    },
-]
 
 export const PostsList = () => {
-    const [posts, setPosts] = React.useState(data);
+    const { posts }= React.useContext(DataContext);
+
+    const [myPosts, setMyPosts] = React.useState(posts)
 
     const onDelete = (id) => {
-        setPosts(posts.filter((post) => post.id !== id))
+        setMyPosts(myPosts.filter((post) => post.id !== id))
     };
 
     return (
         <Box mt={1}>
-            {posts.map((post) => 
+            {myPosts.map((post) => 
                 <CardPost 
                     key={post.id}
                     post={post}
