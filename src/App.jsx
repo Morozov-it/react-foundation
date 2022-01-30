@@ -1,8 +1,11 @@
 import React from 'react';
-import { ToggleModeBox } from './components/ToggleModeBox';
+//импорт стилевых компонент
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 //import { grey } from '@mui/material/colors';
+//импорт компонент
+import { ToggleModeBox } from './components/ToggleModeBox';
 
 const styles = {
   page: {
@@ -18,6 +21,9 @@ const styles = {
     border: 1,
     boxShadow: 2,
     height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   }
 }
 
@@ -26,6 +32,9 @@ export function App() {
     <Box sx={styles.page}>
       <Container maxWidth="md" sx={styles.container} >
         <Box sx={styles.box}>
+          <Typography variant="h3" component="h1">
+            Posts
+          </Typography>
           <ToggleModeBox />
         </Box>
       </Container>
