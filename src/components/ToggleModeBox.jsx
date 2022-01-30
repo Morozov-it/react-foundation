@@ -15,16 +15,11 @@ export const ToggleModeBox = () => {
     const colorMode = React.useContext(ColorModeContext);
 
     return (
-        <Box
-        sx={{
-            display: 'flex',
-            width: '100%',
-            justifyContent: 'flex-end'
-        }}
-        >
-        <IconButton onClick={colorMode.toggleColorMode} color="inherit">
-            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-        </IconButton>
-    </Box>
+        <Box sx={{ display: 'inline-block', ml:1 }}>
+            <IconButton sx={{ padding: 0 }}
+                onClick={colorMode.toggleColorMode} color="inherit">
+                {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+        </Box>
     )
 };

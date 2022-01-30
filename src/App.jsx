@@ -2,10 +2,9 @@ import React from 'react';
 //импорт стилевых компонент
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-//import { grey } from '@mui/material/colors';
 //импорт компонент
-import { ToggleModeBox } from './components/ToggleModeBox';
+import { Header } from './components/Header';
+import { PostsList } from './components/PostsList';
 
 const styles = {
   page: {
@@ -19,11 +18,12 @@ const styles = {
   },
   box: {
     border: 1,
+    borderRadius: 1,
     boxShadow: 2,
+    padding: 1,
     height: '100%',
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
+    flexDirection: 'column'
   }
 }
 
@@ -32,10 +32,8 @@ export function App() {
     <Box sx={styles.page}>
       <Container maxWidth="md" sx={styles.container} >
         <Box sx={styles.box}>
-          <Typography variant="h3" component="h1">
-            Posts
-          </Typography>
-          <ToggleModeBox />
+          <Header />
+          <PostsList />
         </Box>
       </Container>
     </Box>
