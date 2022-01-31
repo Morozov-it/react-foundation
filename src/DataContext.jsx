@@ -17,7 +17,17 @@ const data = {
             title: 'Pyton',
             body: 'Pyton is the most hipe language'
         },
-    ]
+    ],
+    genderItems: [
+        { id: 'male', title: 'male' },
+        { id: 'female', title: 'female' },
+        { id: 'other', title: 'other' },
+    ],
+    options: [
+        { id: '1', title: 'JavaScript' },
+        { id: '2', title: 'Java' },
+        { id: '3', title: 'Pyton' },
+    ],
 }
   //создание контекста для данных 
 export const DataContext = React.createContext(data);
@@ -32,9 +42,9 @@ export function DataContextProvider({ children }) {
     };
     //функция добавления постов
     const addPost = (post) => {
-        setPosts((prevPosts) => ({
-            ...prevPosts, ...post
-        }))
+        setPosts((prevPosts) => ([
+            ...prevPosts, post
+        ]))
     }
 
     return (
@@ -42,7 +52,9 @@ export function DataContextProvider({ children }) {
             value={{
                 posts,
                 deletePost,
-                addPost
+                addPost,
+                genderItems: data.genderItems,
+                options: data.options
             }}>
             {children}
         </DataContext.Provider>
