@@ -1,5 +1,4 @@
 import React from 'react';
-import { DataContext } from '../DataContext';
 import { useForm, Form } from '../hooks/useForm'
 //импорт стилевых компонент
 import Grid from '@mui/material/Grid';
@@ -26,20 +25,19 @@ const initialState = {
     postDate: new Date(),
 }
 
-export const AddPostForm = () => {
-    const { addPost, genderItems, options } = React.useContext(DataContext);
+export const AddPostForm = ({ addPost, genderItems, options }) => {
+    
     const { values, handleInputChange, handleFormReset } = useForm(initialState);
     
     //функция отправки объекта нового поста в массив постов в DataContext
     const onSubmit = (event) => {
         event.preventDefault();
-        let id = Date.now();
         let date = values.postDate.toDateString();
-        const newPost = { ...values, id, postDate:date };
+        const newPost = { ...values, id:Date.now(), postDate:date };
         addPost(newPost)
+        handleFormReset()
         //console.log('post is added', newPost);
     };
-    //console.log(values)
 
     return (
         <Paper variant="outlined" sx={{ p: 1 }}>
@@ -105,7 +103,6 @@ export const AddPostForm = () => {
                                 startIcon={<DeleteIcon />}/>
                             <Button
                                 type='submit'
-                                onClick={() => { }}
                                 text='add post'
                                 endIcon={<SendIcon />}/>
                         </Stack>

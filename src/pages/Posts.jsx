@@ -1,4 +1,5 @@
 import React from 'react';
+import { DataContext } from '../DataContext';
 import Box from '@mui/material/Box';
 //импорт компонент
 import { Header } from '../components/Header';
@@ -16,12 +17,16 @@ const styles = {
     }
 }
 
-export default function Posts () {
+export default function Posts() {
+    const { posts, deletePost, addPost, genderItems, options } = React.useContext(DataContext);
+    
     return (
         <Box sx={styles.box}>
-            <Header />
-            <AddPostForm />
-            <PostsList sx={styles.mainItem}/>
+            <Header title='Posts'/>
+            <AddPostForm {...{ addPost, genderItems, options }}/>
+            <PostsList sx={styles.mainItem}
+                items={posts}
+                deleteItem={deletePost}/>
         </Box>
     )
 };
