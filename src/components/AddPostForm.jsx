@@ -5,12 +5,16 @@ import { useForm, Form } from '../hooks/useForm'
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send';
 //импорт готовых компонент
 import Input from '../controls/Input';
 import RadioGroup from '../controls/RadioGroup';
 import Select from '../controls/Select';
 import CheckBox from '../controls/CheckBox';
 import DatePicker from '../controls/DatePicker';
+import Button from '../controls/Button';
 
 
 const initialState = {
@@ -20,19 +24,29 @@ const initialState = {
     language: '',
     isCompleted: false,
     postDate: new Date(),
-    error: {}
 }
 
 export const AddPostForm = () => {
     const { addPost, genderItems, options } = React.useContext(DataContext);
-    const { values, handleInputChange } = useForm(initialState);
+    const { values, handleInputChange, handleFormReset } = useForm(initialState);
     
+    //функция отправки объекта нового поста в массив постов в DataContext
+    const onSubmit = (event) => {
+        event.preventDefault();
+        let id = Date.now();
+        let date = values.postDate.toDateString();
+        const newPost = { ...values, id, postDate:date };
+        addPost(newPost)
+        //console.log('post is added', newPost);
+    };
+    //console.log(values)
+
     return (
         <Paper variant="outlined" sx={{ p: 1 }}>
             <Typography variant="h6" gutterBottom component="div">
                 Add a new post
             </Typography>
-            <Form>
+            <Form onReset={handleFormReset} onSubmit={onSubmit}>
                 <Grid container spacing={1}>
                     <Grid item xs={12} sm={12} md={4} >
                         <Input
@@ -52,7 +66,7 @@ export const AddPostForm = () => {
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                         <RadioGroup
-                            label='Sex of author'
+                            label='Gender'
                             name="gender"
                             value={values.gender}
                             onChange={handleInputChange}
@@ -82,6 +96,19 @@ export const AddPostForm = () => {
                             checked={values.isCompleted}
                             onChange={handleInputChange}
                         />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={8}>
+                        <Stack sx={{justifyContent:'flex-end'}} direction="row" spacing={1}>
+                            <Button
+                                type='reset'
+                                text='clear form'
+                                startIcon={<DeleteIcon />}/>
+                            <Button
+                                type='submit'
+                                onClick={() => { }}
+                                text='add post'
+                                endIcon={<SendIcon />}/>
+                        </Stack>
                     </Grid>
                 </Grid>
             </Form>

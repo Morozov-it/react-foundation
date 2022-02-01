@@ -5,35 +5,38 @@ import Box from '@mui/material/Box';
 
 
 //хук для работы с состоянием форм
-export function useForm (initialState) {
+export function useForm(initialState) {
+    //активация состояния полей формы с начальным состоянием
     const [values, setValues] = React.useState(initialState);
 
+    //функция для сброса всех полей
+    const handleFormReset = () => {
+        setValues(initialState)
+    }
+
+    //функция для контролируемых полей
     const handleInputChange = (event) => {
         const { name, value } = event.target
-        
         setValues({
             ...values,
             [name]: value
         })
-        // setValues((prevValue) => ({
-        //     ...prevValue,
-        //     [name]: value
-        // }))
     }
-    console.log(values)
+    
     return {
         values,
         setValues,
-        handleInputChange
+        handleInputChange,
+        handleFormReset
     }
 };
 
 
-export function Form ({children, onSubmit}) {
+export function Form ({children, onSubmit, onReset}) {
     return (
         <Box component="form"
-            noValidate
             autoComplete="off"
+            onReset={onReset}
             onSubmit={onSubmit}>
                 {children}
         </Box>
