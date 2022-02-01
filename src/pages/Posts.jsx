@@ -1,6 +1,8 @@
 import React from 'react';
 import { DataContext } from '../DataContext';
+//импорт стилевых компонент
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 //импорт компонент
 import { Header } from '../components/Header';
 import { PostsList } from '../components/PostsList';
@@ -23,10 +25,19 @@ export default function Posts() {
     return (
         <Box sx={styles.box}>
             <Header title='Posts'/>
-            <AddPostForm {...{ addPost, genderItems, options }}/>
-            <PostsList sx={styles.mainItem}
-                items={posts}
-                deleteItem={deletePost}/>
+            <AddPostForm {...{ addPost, genderItems, options }} />
+            {posts.length>0 ?
+                <PostsList sx={styles.mainItem}
+                    items={posts}
+                    deleteItem={deletePost}
+                />
+                :
+                <Typography sx={{ textAlign:'center', mt:3 }}
+                    variant="h3"
+                    component="h2">
+                    Posts not founded!
+                </Typography>
+            }
         </Box>
     )
 };
