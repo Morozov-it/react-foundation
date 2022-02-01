@@ -22,15 +22,20 @@ const data = {
         }
     ],
     genderItems: [
-        { id: 'male', title: 'male' },
-        { id: 'female', title: 'female' },
-        { id: 'other', title: 'other' },
+        { id: '1', value: 'male', name: 'male' },
+        { id: '2', value: 'female', name: 'female' },
+        { id: '3', value: 'other', name: 'other' },
     ],
-    options: [
-        { id: '1', title: 'JavaScript' },
-        { id: '2', title: 'Java' },
-        { id: '3', title: 'Pyton' },
+    langOptions: [
+        { id: '1', value: 'JavaScript', name: 'JavaScript' },
+        { id: '2', value: 'Java', name: 'Java' },
+        { id: '3', value: 'Pyton', name: 'Pyton' },
     ],
+    sortOptions: [
+        { id: '1', value: 'postDate', name: 'by date' },
+        { id: '2', value: 'title', name: 'by title' },
+        { id: '3', value: 'language', name: 'by language' }
+    ]
 }
   //создание контекста для данных 
 export const DataContext = React.createContext(data);
@@ -39,16 +44,22 @@ export function DataContextProvider({ children }) {
     //создание состояния для постов
     const [posts, setPosts] = React.useState(data.posts);
 
+    //функция добавления постов
+    const addPost = (post) => {
+        setPosts([...posts, post])
+    };
     //функция удаления постов
     const deletePost = (id) => {
         setPosts(posts.filter((post) => post.id !== id))
     };
-    //функция добавления постов
-    const addPost = (post) => {
-        setPosts((prevPosts) => ([
-            ...prevPosts, post
-        ]))
-    }
+    //функция сортировки постов
+    const sortPosts = (sort) => {
+        if (!sort) {
+            setPosts([...posts])
+        } else {
+            setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
+        }
+    };
 
     return (
         <DataContext.Provider
@@ -56,8 +67,10 @@ export function DataContextProvider({ children }) {
                 posts,
                 deletePost,
                 addPost,
+                sortPosts,
                 genderItems: data.genderItems,
-                options: data.options
+                langOptions: data.langOptions,
+                sortOptions: data.sortOptions
             }}>
             {children}
         </DataContext.Provider>

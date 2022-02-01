@@ -25,7 +25,7 @@ const initialState = {
     postDate: new Date(),
 }
 
-export const AddPostForm = ({ addPost, genderItems, options }) => {
+export const AddPostForm = ({ addPost, genderItems, langOptions }) => {
     
     const { values, handleInputChange, handleFormReset } = useForm(initialState);
     
@@ -76,8 +76,9 @@ export const AddPostForm = ({ addPost, genderItems, options }) => {
                             name="language"
                             label='Language'
                             value={values.language}
+                            defaultValue='none'
                             onChange={handleInputChange}
-                            options={options}/>
+                            options={langOptions}/>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                         <DatePicker

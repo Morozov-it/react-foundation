@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import { Header } from '../components/Header';
 import { PostsList } from '../components/PostsList';
 import { AddPostForm } from '../components/AddPostForm';
+import { SortingPost } from '../components/SortingPost';
 
 const styles = {
     box: {
@@ -20,13 +21,20 @@ const styles = {
 }
 
 export default function Posts() {
-    const { posts, deletePost, addPost, genderItems, options } = React.useContext(DataContext);
+    const { posts,
+        deletePost,
+        addPost,
+        sortPosts,
+        genderItems,
+        langOptions,
+        sortOptions } = React.useContext(DataContext);
     
     return (
         <Box sx={styles.box}>
             <Header title='Posts'/>
-            <AddPostForm {...{ addPost, genderItems, options }} />
-            {posts.length>0 ?
+            <AddPostForm {...{ addPost, genderItems, langOptions }} />
+            <SortingPost {...{ sortOptions, sortPosts }}/>
+            {posts.length ?
                 <PostsList sx={styles.mainItem}
                     items={posts}
                     deleteItem={deletePost}
