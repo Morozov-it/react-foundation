@@ -3,48 +3,47 @@ import React from 'react';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
 //импорт готовых компонент
 import Select from '../controls/Select';
-import Button from '../controls/Button';
+import Input from '../controls/Input';
 
 
-export const SortingPost = ({sortOptions, sortPosts}) => {
-    const [data, setData] = React.useState('')
+
+export const FilterPost = ({sortOptions, sortPosts, searchPost}) => {
+    const [sorted, setSorted] = React.useState('');
+    const [search, setSearch] = React.useState('');
 
     const handlerSelect = (e) => {
-        setData(e.target.value)
-        sortPosts(e.target.value)
+        setSorted(e.target.value)
+        
     }
-    const canselSort = () => {
-        setData('')
-        sortPosts('')
+    const handlerInput = (e) => {
+        setSearch(e.target.value)
+        
     }
     //console.log(data)
 
     return (
         <Paper variant="outlined" sx={{ p: 1, mt: 1 }}>
             <Typography variant="h6" gutterBottom component="div">
-                Posts sorting
+                Filter posts
             </Typography>
             <Grid container spacing={1} sx={{alignItems: 'flex-end'}}>
-                <Grid item xs={12} sm={6} md={6}>
+                <Grid item xs={12} sm={9} md={8} >
+                    <Input
+                        label="Search"
+                        name='search'
+                        value={search}
+                        onChange={handlerInput}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={3} md={4}>
                     <Select
                         name="sorting"
                         label='Sorting'
-                        value={data}
+                        value={sorted}
                         onChange={handlerSelect}
                         options={sortOptions}/>
-                </Grid>
-                <Grid item xs={12} sm={6} md={6} >
-                    <Stack sx={{
-                        justifyContent: 'flex-end',
-                        alignItems: 'flex-end'}}>
-                        <Button
-                            onClick={canselSort}
-                            variant='outlined'
-                            text='cancel sort'/>
-                    </Stack>
                 </Grid>
             </Grid>
         </Paper>

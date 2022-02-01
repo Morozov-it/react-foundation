@@ -54,11 +54,11 @@ export function DataContextProvider({ children }) {
     };
     //функция сортировки постов
     const sortPosts = (sort) => {
-        if (!sort) {
-            setPosts([...posts])
-        } else {
+        console.log('sorted');
+        if (sort) {
             setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
         }
+        return posts;
     };
 
     return (
