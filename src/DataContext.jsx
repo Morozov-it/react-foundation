@@ -4,19 +4,22 @@ const data = {
     posts: [
         {
             id: 1,
-            title: 'JavaScript',
-            body: 'JavaScript is the most usefull language'
+            title: 'New post',
+            description: 'Those of us who live in Europe new post-communist democracies experienced similar political deals when we lived behind the former Iron Curtain',
+            gender: 'male',
+            language: 'JavaScript',
+            isCompleted: false,
+            postDate: Date(),
         },
         {
             id: 2,
-            title: 'Java',
-            body: 'Java is the most complex language'
-        },
-        {
-            id: 3,
-            title: 'Pyton',
-            body: 'Pyton is the most hipe language'
-        },
+            title: 'Old post',
+            description: 'Here you can find activities to practise your reading skills. Reading will help you to improve your understanding of the language and build your vocabulary.',
+            gender: 'female',
+            language: 'Java',
+            isCompleted: false,
+            postDate: Date(),
+        }
     ],
     genderItems: [
         { id: 'male', title: 'male' },
