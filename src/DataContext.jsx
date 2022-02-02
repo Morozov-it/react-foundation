@@ -43,22 +43,36 @@ export const DataContext = React.createContext(data);
 export function DataContextProvider({ children }) {
     //создание состояния для постов
     const [posts, setPosts] = React.useState(data.posts);
+    const [edit, setEdit] = React.useState(['edit']);
 
     //функция добавления постов
     const addPost = (post) => {
+        setEdit([...edit])
         setPosts([...posts, post])
     };
     //функция удаления постов
     const deletePost = (id) => {
+        setEdit([...edit])
         setPosts(posts.filter((post) => post.id !== id))
     };
     //функция сортировки постов
     const sortPosts = (sort) => {
-        console.log('sorted');
         if (sort) {
             setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
         }
         return posts;
+    };
+    //запоминание массива перед поиском
+    const savedPosts = React.useMemo(() => {
+        return [...posts]
+    }, [edit]) 
+
+    //функция поиска постов
+    const searchPosts = (query) => {
+        if (query) {
+            setPosts(posts.filter(post =>
+                post.title.toLowerCase().includes(query)))
+        } else setPosts(savedPosts)
     };
 
     return (
@@ -68,6 +82,7 @@ export function DataContextProvider({ children }) {
                 deletePost,
                 addPost,
                 sortPosts,
+                searchPosts,
                 genderItems: data.genderItems,
                 langOptions: data.langOptions,
                 sortOptions: data.sortOptions

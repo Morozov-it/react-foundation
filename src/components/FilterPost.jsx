@@ -9,20 +9,20 @@ import Input from '../controls/Input';
 
 
 
-export const FilterPost = ({sortOptions, sortPosts, searchPost}) => {
+export const FilterPost = ({sortOptions, sortPosts, searchPosts }) => {
     const [sorted, setSorted] = React.useState('');
     const [search, setSearch] = React.useState('');
 
-    const handlerSelect = (e) => {
-        setSorted(e.target.value)
-        
+    const handlerSelect = (sort) => {
+        setSorted(sort)
+        sortPosts(sort)
     }
+    
     const handlerInput = (e) => {
         setSearch(e.target.value)
-        
+        searchPosts(e.target.value)
     }
-    //console.log(data)
-
+    //console.log()
     return (
         <Paper variant="outlined" sx={{ p: 1, mt: 1 }}>
             <Typography variant="h6" gutterBottom component="div">
@@ -42,7 +42,7 @@ export const FilterPost = ({sortOptions, sortPosts, searchPost}) => {
                         name="sorting"
                         label='Sorting'
                         value={sorted}
-                        onChange={handlerSelect}
+                        onChange={(e)=>handlerSelect(e.target.value)}
                         options={sortOptions}/>
                 </Grid>
             </Grid>
