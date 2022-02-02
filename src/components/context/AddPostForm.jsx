@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm, Form } from '../hooks/useForm'
+import { useForm, Form } from '../../hooks/useForm'
 //импорт стилевых компонент
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -8,12 +8,12 @@ import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 //импорт готовых компонент
-import Input from '../controls/Input';
-import RadioGroup from '../controls/RadioGroup';
-import Select from '../controls/Select';
-import CheckBox from '../controls/CheckBox';
-import DatePicker from '../controls/DatePicker';
-import Button from '../controls/Button';
+import Input from '../../controls/Input';
+import RadioGroup from '../../controls/RadioGroup';
+import Select from '../../controls/Select';
+import CheckBox from '../../controls/CheckBox';
+import DatePicker from '../../controls/DatePicker';
+import Button from '../../controls/Button';
 
 
 const initialState = {

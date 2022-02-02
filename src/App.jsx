@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Routes, Route } from "react-router-dom";
 //импорт отдельных компонент-страниц
-import Posts from './pages/Posts'
+import ContextPosts from './pages/ContextPosts'
 
 
 const styles = {
@@ -23,7 +23,7 @@ export function App() {
     <Box sx={styles.page}>
       <Container maxWidth="md" sx={styles.container} >
         <Routes>
-          <Route path="/posts" element={<Posts />} />
+          <Route path="/context-posts" element={<ContextPosts />} />
         </Routes>
       </Container>
     </Box>

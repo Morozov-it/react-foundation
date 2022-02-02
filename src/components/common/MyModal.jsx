@@ -17,12 +17,15 @@ const style = {
     p: 2,
 };
 
-export default function MyModal({ open, handleClose, children }) {
+export default function MyModal({ open, setOpen, children }) {
     return (
         <Modal
             open={open}
-            onClose={handleClose}>
-            <Box sx={style}>
+            //onClose={handleClose}
+            onClick={()=>setOpen(false)}
+            >
+            <Box sx={style}
+                onClick={(e)=>e.stopPropagation()}>
                 {children}
             </Box>
         </Modal>

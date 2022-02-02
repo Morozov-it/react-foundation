@@ -48,7 +48,7 @@ export function DataContextProvider({ children }) {
     //функция добавления постов
     const addPost = (post) => {
         setEdit([...edit])
-        setPosts([...posts, post])
+        setPosts([post, ...posts]) //новый пост добавляется вперед
     };
     //функция удаления постов
     const deletePost = (id) => {

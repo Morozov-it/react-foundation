@@ -5,11 +5,11 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 //импорт компонент
-import { Header } from '../components/Header';
-import { PostsList } from '../components/PostsList';
-import { AddPostForm } from '../components/AddPostForm';
-import { FilterPost } from '../components/FilterPost';
-import MyModal from '../components/MyModal';
+import { Header } from '../components/common/Header';
+import { PostsList } from '../components/context/PostsList';
+import { AddPostForm } from '../components/context/AddPostForm';
+import { FilterPost } from '../components/context/FilterPost';
+import MyModal from '../components/common/MyModal';
 
 const styles = {
     box: {
@@ -22,7 +22,7 @@ const styles = {
     }
 }
 
-export default function Posts() {
+export default function ContextPosts() {
     //получение данных из контекста
     const { posts,
         deletePost,
@@ -36,11 +36,11 @@ export default function Posts() {
     //создание состояния для управления модальным окном
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    //const handleClose = () => setOpen(false);
     
     return (
         <Box sx={styles.box}>
-            <MyModal {...{ open, handleClose }}>
+            <MyModal {...{ open, setOpen }}>
                 <AddPostForm {...{ addPost, genderItems, langOptions }} />
             </MyModal>
             <Header title='Posts' />

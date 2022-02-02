@@ -2,6 +2,8 @@ import React from 'react';
 //импорт стилевых компонент
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Collapse from '@mui/material/Collapse';
+import { TransitionGroup } from 'react-transition-group';
 //импорт компонент
 import CardPost from './CardPost';
 
@@ -19,12 +21,16 @@ export const PostsList = ({ items, deleteItem }) => {
 
     return (
         <Box mt={1}>
-            {items.map((post) => 
-                <CardPost 
-                    key={post.id}
-                    post={post}
-                    onDelete={deleteItem}
-                />)}
+            <TransitionGroup>
+                {items.map((item) => (
+                    <Collapse key={item.id}>
+                            <CardPost 
+                                key={item.id}
+                                post={item}
+                                onDelete={deleteItem} />
+                    </Collapse>
+                ))}
+            </TransitionGroup>
         </Box>
     )
 };

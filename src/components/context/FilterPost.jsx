@@ -4,8 +4,8 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 //импорт готовых компонент
-import Select from '../controls/Select';
-import Input from '../controls/Input';
+import Select from '../../controls/Select';
+import Input from '../../controls/Input';
 
 
 
