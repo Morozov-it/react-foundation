@@ -1,5 +1,5 @@
 import React from 'react';
-import PostService from '../API/PostService';
+import { PostService, getTotalPages } from '../API/PostService';
 import { useFilter } from '../hooks/useFilter';
 import { useFetching } from '../hooks/useFetching';
 //импорт стилевых компонент
@@ -8,14 +8,13 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
+import Pagination from '@mui/material/Pagination';
 //импорт компонент
 import { Header } from '../components/common/Header';
 import { ListPosts } from '../components/server/ListPosts';
 import { AddForm } from '../components/server/AddForm';
 import { PostFilter } from '../components/server/PostFilter';
 import MyModal from '../components/common/MyModal';
-
-
 
 const styles = {
     box: {
@@ -30,6 +29,13 @@ const styles = {
         display: 'flex',
         justifyContent: 'center',
         marginTop: 4,
+    },
+    paginator: {
+        marginTop: 2,
+        marginBottom: 2,
+        '& .MuiPagination-ul': {
+            justifyContent: 'center'
+        }
     }
 }
 
@@ -42,11 +48,17 @@ export default function ServerPosts() {
     const [posts, setPosts] = React.useState([]);
     //состояниe для фильтра
     const [filter, setFilter] = React.useState({ sort: '', search: '' });
+    //состояние для пагинации
+    const [totalPages, setTotalPages] = React.useState(0);
+    const [limit, setLimit] = React.useState(5);
+    const [page, setPage] = React.useState(1);
 
     //состояние загрузки и ошибки
     const [fetching, isFetching, error] = useFetching( async () => {
-        const serverPosts = await PostService.getAll();
-        setPosts(serverPosts);
+        const response = await PostService.getAll(limit, page);
+        const totalCount = response.headers['x-total-count'];
+        setPosts(response.data);
+        setTotalPages(getTotalPages(totalCount, limit))
     })
 
     //функция добавления постов
@@ -63,7 +75,7 @@ export default function ServerPosts() {
     
     React.useEffect(() => {
         fetching();
-    }, [])
+    }, [page])
 
     return (
         <Box sx={styles.box}>
@@ -85,7 +97,16 @@ export default function ServerPosts() {
                 items={filteredPosts}
                 deleteItem={deletePost}/>
             }
+            
             {error && <Alert severity="error">{error}</Alert>}
+            
+            <Pagination
+                sx={styles.paginator}
+                onChange={(event,page) => setPage(page)}
+                page={page}
+                count={totalPages}
+                variant="outlined"
+                color="primary" />
         </Box>
     )
 };
