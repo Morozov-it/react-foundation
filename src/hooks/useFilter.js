@@ -2,10 +2,10 @@ import { useMemo } from 'react';
 
 export const useFilter = (array, filter) => {
     const { sort, search } = filter
-    console.log('filter')
+    //console.log('filter')
     //функция сортировки массива
     const sortedArray = useMemo(() => {
-        console.log('sort')
+        //console.log('sort')
         if (sort) {
             return [...array].sort((a, b) => a[sort].localeCompare(b[sort]))
         }
@@ -14,7 +14,7 @@ export const useFilter = (array, filter) => {
 
     //функция поиска по полю title в сортированном массиве
     const sortedAndSearchedArray = useMemo(() => {
-        console.log('search')
+        //console.log('search')
         return sortedArray.filter((item) => item.title.toLowerCase().includes(search.toLowerCase()))
     }, [sortedArray, search]);
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 //импорт стилевых компонент
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -22,19 +23,6 @@ const styles = {
     }
 }
 
-const initialPosts = [
-    {
-        id: 1,
-        title: 'Post #1',
-        body: 'JavaScript'
-    },
-    {
-        id: 2,
-        title: 'Post #2',
-        body: 'Pyton'
-    }
-]
-
 export default function ServerPosts() {
     
     //создание состояния для управления модальным окном
@@ -42,7 +30,7 @@ export default function ServerPosts() {
     const handleOpen = () => setOpen(true);
 
     //создание состояния постов
-    const [posts, setPosts] = React.useState(initialPosts);
+    const [posts, setPosts] = React.useState([]);
     //создание состояния для фильтра
     const [filter, setFilter] = React.useState({sort:'',search:''});
 
@@ -58,6 +46,15 @@ export default function ServerPosts() {
     //хук для сортировки и поиска в массиве постов
     const filteredPosts = useFilter(posts, filter)
     
+    //функция для получения постов от сервера
+    async function fetchPosts() {
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
+        setPosts(response.data)
+    }
+    React.useEffect(() => {
+        fetchPosts()
+    }, [])
+
     return (
         <Box sx={styles.box}>
             <MyModal {...{ open, setOpen }}>
