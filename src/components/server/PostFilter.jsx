@@ -11,8 +11,12 @@ const options = [
     { id: '1', value: 'body', name: 'by description' },
     { id: '2', value: 'title', name: 'by title' },
 ]
+const initialFilter = {
+    sort: '',
+    search: ''
+}
 
-export const PostFilter = ({ filter, setFilter }) => {
+export const PostFilter = ({ filter = initialFilter, setFilter }) => {
     const handlerType = (e) => {
         const { name, value } = e.target;
         setFilter({...filter, [name]: value })

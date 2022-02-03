@@ -1,6 +1,12 @@
 import { useMemo } from 'react';
 
-export const useFilter = (array, filter) => {
+const initialFilter = {
+    sort: '',
+    search: ''
+};
+const initArray = [];
+
+export const useFilter = (array = initArray, filter = initialFilter) => {
     const { sort, search } = filter
     //console.log('filter')
     //функция сортировки массива
