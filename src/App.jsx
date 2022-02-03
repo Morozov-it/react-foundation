@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { Suspense, lazy }  from 'react';
 //импорт стилевых компонент
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { Routes, Route } from "react-router-dom";
 //импорт отдельных компонент-страниц
-import ContextPosts from './pages/ContextPosts'
+import Main from './pages/Main'
+const ContextPosts = lazy(() => import('./pages/ContextPosts'));
+const ServerPosts = lazy(() => import('./pages/ServerPosts'));
+
 
 
 const styles = {
@@ -22,9 +25,13 @@ export function App() {
   return (
     <Box sx={styles.page}>
       <Container maxWidth="md" sx={styles.container} >
-        <Routes>
-          <Route path="/context-posts" element={<ContextPosts />} />
-        </Routes>
+        <Suspense fallback={<div>Загрузка...</div>}>
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/context-posts" element={<ContextPosts />} />
+            <Route path="/server-posts" element={<ServerPosts />} />
+          </Routes>
+          </Suspense>
       </Container>
     </Box>
   );

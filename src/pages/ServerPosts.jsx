@@ -5,10 +5,11 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 //импорт компонент
 import { Header } from '../components/common/Header';
-import { PostsList } from '../components/context/PostsList';
-import { AddPostForm } from '../components/context/AddPostForm';
-import { FilterPost } from '../components/context/FilterPost';
+import { ListPosts } from '../components/server/ListPosts';
+import { AddForm } from '../components/server/AddForm';
+import { PostFilter } from '../components/server/PostFilter';
 import MyModal from '../components/common/MyModal';
+import { useFilter } from '../hooks/useFilter';
 
 const styles = {
     box: {
@@ -21,17 +22,46 @@ const styles = {
     }
 }
 
+const initialPosts = [
+    {
+        id: 1,
+        title: 'Post #1',
+        body: 'JavaScript'
+    },
+    {
+        id: 2,
+        title: 'Post #2',
+        body: 'Pyton'
+    }
+]
+
 export default function ServerPosts() {
     
     //создание состояния для управления модальным окном
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
-    //const handleClose = () => setOpen(false);
+
+    //создание состояния постов
+    const [posts, setPosts] = React.useState(initialPosts);
+    //создание состояния для фильтра
+    const [filter, setFilter] = React.useState({sort:'',search:''});
+
+    //функция добавления постов
+    const addPost = (post) => {
+        setPosts([post, ...posts]) //новый пост добавляется вперед
+    };
+    //функция удаления постов
+    const deletePost = (id) => {
+        setPosts(posts.filter((post) => post.id !== id))
+    };
+
+    //хук для сортировки и поиска в массиве постов
+    const filteredPosts = useFilter(posts, filter)
     
     return (
         <Box sx={styles.box}>
             <MyModal {...{ open, setOpen }}>
-                <AddPostForm {...{ addPost, genderItems, langOptions }} />
+                <AddForm {...{ addPost }} />
             </MyModal>
             <Header title='Posts' />
 
@@ -39,10 +69,10 @@ export default function ServerPosts() {
                 <Button fullWidth onClick={handleOpen}>Create post</Button>
             </Paper>
             
-            <FilterPost {...{ sortOptions, sortPosts, searchPosts }} />
-            <PostsList
+            <PostFilter {...{ filter, setFilter }}/>
+            <ListPosts
                 sx={styles.mainItem}
-                items={posts}
+                items={filteredPosts}
                 deleteItem={deletePost}/>
         </Box>
     )
