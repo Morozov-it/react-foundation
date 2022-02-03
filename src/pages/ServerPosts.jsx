@@ -1,9 +1,10 @@
 import React from 'react';
-import axios from 'axios';
+import PostService from '../API/PostService';
 //импорт стилевых компонент
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 //импорт компонент
 import { Header } from '../components/common/Header';
 import { ListPosts } from '../components/server/ListPosts';
@@ -11,6 +12,7 @@ import { AddForm } from '../components/server/AddForm';
 import { PostFilter } from '../components/server/PostFilter';
 import MyModal from '../components/common/MyModal';
 import { useFilter } from '../hooks/useFilter';
+
 
 const styles = {
     box: {
@@ -25,13 +27,14 @@ const styles = {
 
 export default function ServerPosts() {
     
-    //создание состояния для управления модальным окном
+    //состояниe для управления модальным окном
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
 
-    //создание состояния постов
+    //состояниe постов
     const [posts, setPosts] = React.useState([]);
-    //создание состояния для фильтра
+    const [isFetching, setIsFetching] = React.useState(false);
+    //состояниe для фильтра
     const [filter, setFilter] = React.useState({sort:'',search:''});
 
     //функция добавления постов
@@ -48,11 +51,13 @@ export default function ServerPosts() {
     
     //функция для получения постов от сервера
     async function fetchPosts() {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts');
-        setPosts(response.data)
+        setIsFetching(true);
+        const serverPosts = await PostService.getAll();
+        setPosts(serverPosts);
+        setIsFetching(false);
     }
     React.useEffect(() => {
-        fetchPosts()
+        fetchPosts();
     }, [])
 
     return (
@@ -61,16 +66,23 @@ export default function ServerPosts() {
                 <AddForm {...{ addPost }} />
             </MyModal>
             <Header title='Posts' />
-
             <Paper variant="outlined" sx={{ p: 1 }}>
                 <Button fullWidth onClick={handleOpen}>Create post</Button>
             </Paper>
+            <PostFilter {...{ filter, setFilter }} />
             
-            <PostFilter {...{ filter, setFilter }}/>
-            <ListPosts
+            {isFetching 
+            ?<Typography
+                sx={{ textAlign: 'center', mt: 3 }}
+                variant="h3"
+                component="h2">
+                Loading...
+            </Typography>
+            :<ListPosts
                 sx={styles.mainItem}
                 items={filteredPosts}
                 deleteItem={deletePost}/>
+            }
         </Box>
     )
 };
