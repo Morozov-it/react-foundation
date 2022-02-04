@@ -10,6 +10,10 @@ export class PostService {
         })
         return response
     }
+    static async getPostId(id = 1) {
+        const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+        return response
+    }
 }
 
 export const getTotalPages = (totalCount, limit ) => {

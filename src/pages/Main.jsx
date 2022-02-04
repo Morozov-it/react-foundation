@@ -5,11 +5,10 @@ import Typography from '@mui/material/Typography';
 
 const styles = {
     box: {
-        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         textAlign: 'center'
-    },
+    }
 }
 
 export default function Main() {

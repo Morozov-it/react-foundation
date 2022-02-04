@@ -4,10 +4,10 @@ import { useState } from "react"
 export const useFetching = (callback) => {
     const [isFetching, setIsFetching] = useState(false);
     const [error, setError] = useState('');
-    const fetching = async () => {
+    const fetching = async (...args) => {
         try {
             setIsFetching(true);
-            await callback();
+            await callback(...args);
         } catch (e) {
             setError(e.message);
         } finally {

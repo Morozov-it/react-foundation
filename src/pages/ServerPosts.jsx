@@ -18,7 +18,6 @@ import { PostFilter } from '../components/server/PostFilter';
 
 const styles = {
     box: {
-        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column'
     },

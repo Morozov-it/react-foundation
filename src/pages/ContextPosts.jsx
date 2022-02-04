@@ -12,7 +12,6 @@ import MyModal from '../components/common/MyModal';
 
 const styles = {
     box: {
-        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column'
     },

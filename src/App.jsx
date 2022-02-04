@@ -10,10 +10,13 @@ const Main = lazy(() => import('./pages/Main'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const ContextPosts = lazy(() => import('./pages/ContextPosts'));
 const ServerPosts = lazy(() => import('./pages/ServerPosts'));
+const PostIdPage = lazy(() => import('./pages/PostIdPage'));
 
 
 const styles = {
   page: {
+    minWidth: '100vw',
+    minHeight: '100vh',
     bgcolor: 'background.default',
     color: 'text.primary'
   },
@@ -36,6 +39,7 @@ export function App() {
             <Route path="/" element={<Main />} />
             <Route path="/context" element={<ContextPosts />} />
             <Route path="/server" element={<ServerPosts />} />
+            <Route path="/server/:id" element={<PostIdPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Container>
