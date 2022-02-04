@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from "react-router-dom";
 import { PostService } from '../API/PostService';
 import { useFetching } from '../hooks/useFetching';
+import CommentsList from '../components/server/CommentsList'
 //импорт стилевых компонент
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -21,21 +22,39 @@ const styles = {
     },
 }
 
-const initialPost = { id: 0, title: '', body: '' };
-
 export default function PostIdPage() {
-    let { id } = useParams();
-    const [post, setPost] = React.useState(initialPost);
+    //получение Id из URL адреса
+    let params = useParams();
 
-    const [fetching, isFetching, error] = useFetching(async () => {
-        const response = await PostService.getPostId(id)
-        setPost(response.data)
-    });
+    //состояние для постов и комментариев
+    const [post, setPost] = React.useState({});
+    const [comments, setComments] = React.useState([]);
+
+    //функция через хук для получения постов с индикацией и ошибками
+    const [fetchPostById, isFetching, error] = useFetching(
+        async (id) => {
+            const response = await PostService.getById(id)
+            setPost(response.data)
+        }
+    );
+    //функция через хук для получения комментариев с индикацией и ошибками
+    const [fetchCommentsById, isComFetching, comError] = useFetching(
+        async (id) => {
+            const response = await PostService.getCommentsById(id)
+            setComments(response.data)
+        }
+    );
+
+
     React.useEffect(() => {
-        fetching()
+        fetchPostById(params.id);
+        fetchCommentsById(params.id);
         //очистка при unmount
-        return () => {setPost(initialPost)}
-    }, [id]);
+        return () => {
+            setPost({});
+            setComments([]);
+        }
+    }, []);
 
     return (
         <Box sx={styles.box} >
@@ -56,6 +75,8 @@ export default function PostIdPage() {
                 </Card>
             }
             {error && <Alert severity="error">{error}</Alert>}
+            <CommentsList items={comments}/>
+            {comError && <Alert severity="error">{comError}</Alert>}
         </Box>
     );
 }

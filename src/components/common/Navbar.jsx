@@ -90,7 +90,7 @@ export const Navbar = () => {
                     <Button
                         key={page}
                         onClick={() => navigate(`/${page}`)}
-                        sx={{ my: 2, color: 'white', display: 'block' }}
+                        sx={{ my: 2, mx: 0.5, color: 'white', display: 'block' }}
                     >
                         {page}
                     </Button>
@@ -99,7 +99,7 @@ export const Navbar = () => {
 
                 <Box sx={{ flexGrow: 0 }}>
                     <ToggleModeBox />
-                    <Button color="inherit">Login</Button>
+                    <Button sx={{ mx: 0.5 }} color="inherit">Login</Button>
                 </Box>
             </Toolbar>
         </Container>
