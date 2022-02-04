@@ -26,6 +26,10 @@ const styles = {
 export default function Login() {
     const { isAuth, setIsAuth } = React.useContext(DataContext);
 
+    function logOut() {
+        setIsAuth(false);
+        localStorage.removeItem('auth')
+    }
     return (
         <Box sx={styles.box}>
             {isAuth
@@ -37,7 +41,7 @@ export default function Login() {
                         <Button
                         text='log out'
                         variant='contained'
-                        onClick={()=>setIsAuth(false)}
+                        onClick={logOut}
                         endIcon={<LogoutIcon />}/>
                     </Box>
                 </Paper>

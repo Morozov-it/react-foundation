@@ -30,7 +30,12 @@ export function App() {
   //получение данных из контекста
   const { isAuth, setIsAuth } = React.useContext(DataContext);
 
-  
+  React.useEffect(() => {
+    //при первом рендере проверка поля авторизации в localStorage
+    if (localStorage.getItem('auth')){
+      setIsAuth(true)
+    }
+  }, [])
 
   return (
     <BrowserRouter>

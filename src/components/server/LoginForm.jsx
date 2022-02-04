@@ -36,11 +36,10 @@ export const LoginForm = ({ setIsAuth }) => {
     //функция отправки объекта нового поста в массив постов
     const onSubmit = (event) => {
         event.preventDefault()
-        // let id = Date.now()
-        // send({ ...values, id })
         setIsAuth(true)
+        //сохранение авторизации в localStorage
+        localStorage.setItem('auth', 'true')
         handleFormReset()
-        //console.log('post is added', newPost);
     };
 
     return (
