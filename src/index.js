@@ -1,19 +1,18 @@
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from "react-router-dom";
-import { DataContextProvider } from './DataContext'
+import { DataContextProvider } from './context/DataContext'
 import CssBaseline from '@mui/material/CssBaseline';
-import { ModeContext } from './ModeContext';
+import { ModeContext } from './context/ModeContext';
 import { App } from './App';
 
 
 ReactDOM.render(
-  <BrowserRouter>
-    <DataContextProvider>
+  <>
     <CssBaseline />
     <ModeContext>
-      <App />
+      <DataContextProvider>
+        <App />
+      </DataContextProvider>
     </ModeContext>
-  </DataContextProvider>
-  </BrowserRouter>,
+  </>,
   document.getElementById('root')
 );

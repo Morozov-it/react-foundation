@@ -1,5 +1,5 @@
 import React from 'react';
-import { customTheme } from './customTheme';
+import { customTheme } from '../customTheme';
 import { ThemeProvider, createTheme, responsiveFontSizes  } from '@mui/material/styles';
 
 //создание контекста для управления функцией изменения темы

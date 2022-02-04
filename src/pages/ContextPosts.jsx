@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataContext } from '../DataContext';
+import { DataContext } from '../context/DataContext';
 //импорт стилевых компонент
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';

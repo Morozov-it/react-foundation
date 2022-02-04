@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 const pages = ['server', 'context'];
 
-export const Navbar = () => {
+export const Navbar = ({isAuth}) => {
     let navigate = useNavigate();
     //состояние для управления кнопками навигации
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -99,7 +99,11 @@ export const Navbar = () => {
 
                 <Box sx={{ flexGrow: 0 }}>
                     <ToggleModeBox />
-                    <Button sx={{ mx: 0.5 }} color="inherit">Login</Button>
+                    <Button
+                        onClick={() => navigate(`/login`)}
+                        sx={{ mx: 0.5 }}
+                        color="inherit">{isAuth ? 'Log out' : 'Log in'}
+                        </Button>
                 </Box>
             </Toolbar>
         </Container>

@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
-import { Routes, Route } from "react-router-dom";
-import { routes } from './router';
+import { DataContext } from './context/DataContext'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { privateRoutes, publicRoutes } from './router';
 //импорт стилевых компонент
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -26,18 +27,28 @@ const styles = {
 }
 
 export function App() {
+  //получение данных из контекста
+  const { isAuth, setIsAuth } = React.useContext(DataContext);
+
+  
+
   return (
-    <Box sx={styles.page}>
-      <Navbar />
-      <Suspense fallback={<Spinner />}>
-        <Container sx={styles.container} maxWidth="md" >
-          <Routes>
-            {routes.map((r) =>
-              <Route key={r.id} path={r.path} element={r.element} />
-            )}
-          </Routes>
-        </Container>
-      </Suspense>
-    </Box>
+    <BrowserRouter>
+      <Box sx={styles.page}>
+        <Navbar {...{isAuth}}/>
+        <Suspense fallback={<Spinner />}>
+          <Container sx={styles.container} maxWidth="md" >
+          {isAuth
+            ?<Routes>{privateRoutes.map((r) =>
+                <Route key={r.id} path={r.path} element={r.element} />)}
+            </Routes>
+            :<Routes>{publicRoutes.map((r) =>
+                <Route key={r.id} path={r.path} element={r.element} />)}
+            </Routes>
+          }
+          </Container>
+        </Suspense>
+      </Box>
+    </BrowserRouter>
   );
 }

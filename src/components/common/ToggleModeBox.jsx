@@ -1,11 +1,10 @@
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
-import { ColorModeContext } from '../../ModeContext';
+import { ColorModeContext } from '../../context/ModeContext';
 //импорт готовых компонент
 import { Box, IconButton }  from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-
 
 
 export const ToggleModeBox = () => {

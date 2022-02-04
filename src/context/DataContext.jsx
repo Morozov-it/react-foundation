@@ -11,15 +11,6 @@ const data = {
             isCompleted: false,
             postDate: Date(),
         },
-        {
-            id: 2,
-            title: 'Old post',
-            description: 'Here you can find activities to practise your reading skills. Reading will help you to improve your understanding of the language and build your vocabulary.',
-            gender: 'female',
-            language: 'Java',
-            isCompleted: false,
-            postDate: Date(),
-        }
     ],
     genderItems: [
         { id: '1', value: 'male', name: 'male' },
@@ -37,10 +28,16 @@ const data = {
         { id: '3', value: 'language', name: 'by language' }
     ]
 }
-  //создание контекста для данных 
+//создание контекста для данных 
 export const DataContext = React.createContext(data);
 
+
+//корневой компонент для передачи контекста дочерним
 export function DataContextProvider({ children }) {
+    
+    //состояние авторизации
+    const [isAuth, setIsAuth] = React.useState(false);
+
     //создание состояния для постов
     const [posts, setPosts] = React.useState(data.posts);
     const [edit, setEdit] = React.useState(['edit']);
@@ -78,6 +75,8 @@ export function DataContextProvider({ children }) {
     return (
         <DataContext.Provider
             value={{
+                isAuth,
+                setIsAuth,
                 posts,
                 deletePost,
                 addPost,
