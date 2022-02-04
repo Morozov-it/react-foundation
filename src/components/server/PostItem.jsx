@@ -6,8 +6,8 @@ export default function PostItem({ item, onDelete }) {
         <Box mb={1}>
             <Card variant="outlined">
                 <CardContent>
-                    <Typography variant="h5" component="div">
-                        {item.title}
+                    <Typography variant="h6" component="div">
+                        {item.id}. {item.title}
                     </Typography>
                     <Typography variant="body2">
                         {item.body}

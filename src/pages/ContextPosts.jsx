@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 //импорт компонент
-import { Header } from '../components/common/Header';
 import { PostsList } from '../components/context/PostsList';
 import { AddPostForm } from '../components/context/AddPostForm';
 import { FilterPost } from '../components/context/FilterPost';
@@ -43,7 +42,6 @@ export default function ContextPosts() {
             <MyModal {...{ open, setOpen }}>
                 <AddPostForm {...{ addPost, genderItems, langOptions }} />
             </MyModal>
-            <Header title='Posts' />
 
             <Paper variant="outlined" sx={{ p: 1 }}>
                 <Button fullWidth onClick={handleOpen}>Create post</Button>

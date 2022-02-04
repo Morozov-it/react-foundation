@@ -6,15 +6,15 @@ import { useFetching } from '../hooks/useFetching';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
-import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
-import Pagination from '@mui/material/Pagination';
 //импорт компонент
-import { Header } from '../components/common/Header';
+import { Spinner } from '../components/common/Spinner';
+import MyModal from '../components/common/MyModal';
+import { Paginator } from '../components/common/Paginator';
 import { ListPosts } from '../components/server/ListPosts';
 import { AddForm } from '../components/server/AddForm';
 import { PostFilter } from '../components/server/PostFilter';
-import MyModal from '../components/common/MyModal';
+
 
 const styles = {
     box: {
@@ -25,18 +25,6 @@ const styles = {
     mainItem: {
         flex: '1 1 auto'
     },
-    spinner: {
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: 4,
-    },
-    paginator: {
-        marginTop: 2,
-        marginBottom: 2,
-        '& .MuiPagination-ul': {
-            justifyContent: 'center'
-        }
-    }
 }
 
 export default function ServerPosts() {
@@ -82,31 +70,19 @@ export default function ServerPosts() {
             <MyModal {...{ open, setOpen }}>
                 <AddForm {...{ addPost }} />
             </MyModal>
-            <Header title='Posts' />
             <Paper variant="outlined" sx={{ p: 1 }}>
                 <Button fullWidth onClick={handleOpen}>Create post</Button>
             </Paper>
             <PostFilter {...{ filter, setFilter }} />
-
             {isFetching 
-            ?<Box sx={styles.spinner}>
-                <CircularProgress size={80} />
-            </Box>
+            ?<Spinner />
             :<ListPosts
                 sx={styles.mainItem}
                 items={filteredPosts}
                 deleteItem={deletePost}/>
             }
-            
             {error && <Alert severity="error">{error}</Alert>}
-            
-            <Pagination
-                sx={styles.paginator}
-                onChange={(event,page) => setPage(page)}
-                page={page}
-                count={totalPages}
-                variant="outlined"
-                color="primary" />
+            <Paginator {...{setPage, page, totalPages}}/>
         </Box>
     )
 };
