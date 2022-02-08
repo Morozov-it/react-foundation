@@ -8,12 +8,13 @@ import Select from '../../controls/Select';
 import Input from '../../controls/Input';
 import { debounce } from 'lodash';
 
-const options = [
+const optionsSort = [
     { id: '0', value: '', name: 'none' },
     { id: '1', value: 'id', name: 'by id' },
     { id: '2', value: 'body', name: 'by description' },
     { id: '3', value: 'title', name: 'by title' },
 ]
+
 const initialFilter = {
     sort: '',
     search: ''
@@ -29,7 +30,7 @@ export const PostFilter = ({ filter = initialFilter, setFilter }) => {
         delayedQuery(e.target.value);
     }
 
-    const handlerType = (e) => {
+    const handlerSelect = (e) => {
         const { name, value } = e.target;
         setFilter({...filter, [name]: value })
     }
@@ -52,8 +53,8 @@ export const PostFilter = ({ filter = initialFilter, setFilter }) => {
                         name="sort"
                         label='Sort'
                         value={filter.sort}
-                        onChange={handlerType}
-                        options={options}/>
+                        onChange={handlerSelect}
+                        options={optionsSort}/>
                 </Grid>
             </Grid>
         </Paper>

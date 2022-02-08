@@ -1,23 +1,30 @@
 import axios from 'axios';
-let cancelToken;
+//let cancelToken;
 
 export class PostService {
-    static async getAll(limit = 10, page = 1, { sort = '', search = '' }) {
-        if (cancelToken) {
-            cancelToken.cancel('cancelToken')
-        }
-        cancelToken = axios.CancelToken.source();
+    static async getAll(limit = 10, page = 1 ) {
         const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
-            cancelToken: cancelToken.token,
             params: {
                 _limit: limit,
                 _page: page,
-                _sort: sort,
-                q: search
             }
         });
         return response
     }
+    // static async search(search) {
+    //     // if (cancelToken) {
+    //     //     cancelToken.cancel('cancelToken')
+    //     // }
+    //     // cancelToken = axios.CancelToken.source();
+    //     const response = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+    //         //cancelToken: cancelToken.token,
+    //         params: {
+    //             _page: 1,
+    //             q: search
+    //         }
+    //     });
+    //     return response
+    // }
     static async getById(id) {
         const response = await axios.get('https://jsonplaceholder.typicode.com/posts/' + id)
         return response

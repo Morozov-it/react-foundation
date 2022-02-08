@@ -24,10 +24,10 @@ export default function CommentsList ({ items }) {
             <Typography variant='h6'>
                 Testimonials
             </Typography>
-            {items.map((item) => (<>
+            {items.map((item) => (<React.Fragment key={item.id}>
                 <ListItem alignItems="flex-start">
                     <ListItemAvatar>
-                    <Avatar alt="avatar" src="" />
+                    <Avatar alt="avatar" src="/" />
                     </ListItemAvatar>
                     <ListItemText
                         primary={<strong>{item.name}</strong>}
@@ -45,7 +45,7 @@ export default function CommentsList ({ items }) {
                         }/>
                 </ListItem>
                 <Divider variant="inset" component="li" />
-            </>))}
+            </React.Fragment>))}
         </List>
     );
 }

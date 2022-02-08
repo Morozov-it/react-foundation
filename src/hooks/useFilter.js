@@ -13,6 +13,9 @@ export const useFilter = (array = initArray, filter = initialFilter) => {
     const sortedArray = useMemo(() => {
         //console.log('sort')
         if (sort) {
+            if (sort === "id") {
+                return [...array].sort((a, b) => a[sort] < b[sort])
+            }
             return [...array].sort((a, b) => a[sort].localeCompare(b[sort]))
         }
         return array;

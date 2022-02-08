@@ -1,6 +1,6 @@
 import React from 'react';
 import { PostService, getTotalPages } from '../API/PostService';
-//import { useFilter } from '../hooks/useFilter';
+import { useFilter } from '../hooks/useFilter';
 import { useFetching } from '../hooks/useFetching';
 //импорт стилевых компонент
 import Box from '@mui/material/Box';
@@ -13,6 +13,7 @@ import MyModal from '../components/common/MyModal';
 import { ListPosts } from '../components/server/ListPosts';
 import { AddForm } from '../components/server/AddForm';
 import { PostFilter } from '../components/server/PostFilter';
+import { useObserver } from '../hooks/useObserver';
 
 
 const styles = {
@@ -25,6 +26,7 @@ const styles = {
     },
 }
 
+
 export default function ServerPosts() {
     
     //состояниe для управления модальным окном
@@ -33,17 +35,18 @@ export default function ServerPosts() {
     //состояниe постов
     const [posts, setPosts] = React.useState([]);
     //состояниe для фильтра
-    const [filter, setFilter] = React.useState({ sort: '', search: '' });
+    const [filter, setFilter] = React.useState({ sort: '', search: ''});
+
     //состояние для пагинации
     const [totalPages, setTotalPages] = React.useState(0);
-    const [limit, setLimit] = React.useState(5);
+    const [limit, setLimit] = React.useState(10);
     const [page, setPage] = React.useState(1);
 
     //состояние загрузки и ошибки
     const [fetching, isFetching, error] = useFetching( async () => {
-        const response = await PostService.getAll(limit, page, filter);
+        const response = await PostService.getAll(limit, page);
         const totalCount = response.headers['x-total-count'];
-        setPosts(response.data);
+        setPosts([...posts, ...response.data]);
         setTotalPages(getTotalPages(totalCount, limit))
     })
 
@@ -57,11 +60,21 @@ export default function ServerPosts() {
     };
 
     //хук для сортировки и поиска в массиве постов
-    //const filteredPosts = useFilter(posts, filter)
+    const filteredPosts = useFilter(posts, filter)
+
+    //получение элементов страницы для работы скролла постов
+    const lastElement = React.useRef();
+    //вызов хука для скролла постов
+    useObserver(lastElement, page < totalPages, isFetching, () => {
+        setPage(page + 1)
+    })
     
     React.useEffect(() => {
         fetching();
-    }, [page, filter])
+        return () => {
+            setPosts([])
+        }
+    }, [page])
 
     return (
         <Box sx={styles.box}>
@@ -72,15 +85,14 @@ export default function ServerPosts() {
                 <Button fullWidth onClick={handleOpen}>Create post</Button>
             </Paper>
             <PostFilter {...{ filter, setFilter }} />
-            {isFetching 
-            ?<Spinner />
-            :<ListPosts
-                sx={styles.mainItem}
-                items={posts}
-                deleteItem={deletePost}/>
-            }
+
             {error && <Alert severity="error">{error}</Alert>}
-            
+            <ListPosts
+                sx={styles.mainItem}
+                items={filteredPosts}
+                deleteItem={deletePost} />
+            <div style={{height: 10}} ref={lastElement} />
+            {isFetching && <Spinner />}
         </Box>
     )
 };

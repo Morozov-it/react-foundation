@@ -15,9 +15,6 @@ const styles = {
     minHeight: '100vh',
     bgcolor: 'background.default',
     color: 'text.primary',
-    '&::-webkit-scrollbar': {
-      display: 'none'
-    }
   },
   container: {
     paddingTop: {
