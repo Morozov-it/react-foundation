@@ -9,7 +9,9 @@ export const useFetching = (callback) => {
             setIsFetching(true);
             await callback(...args);
         } catch (e) {
-            setError(e.message);
+            if (e.message === 'cancelToken') {
+                setError('')
+            } else setError(e.message);
         } finally {
             setIsFetching(false);
         }

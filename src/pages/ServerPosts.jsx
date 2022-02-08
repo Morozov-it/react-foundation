@@ -1,6 +1,6 @@
 import React from 'react';
 import { PostService, getTotalPages } from '../API/PostService';
-import { useFilter } from '../hooks/useFilter';
+//import { useFilter } from '../hooks/useFilter';
 import { useFetching } from '../hooks/useFetching';
 //импорт стилевых компонент
 import Box from '@mui/material/Box';
@@ -42,7 +42,7 @@ export default function ServerPosts() {
 
     //состояние загрузки и ошибки
     const [fetching, isFetching, error] = useFetching( async () => {
-        const response = await PostService.getAll(limit, page);
+        const response = await PostService.getAll(limit, page, filter);
         const totalCount = response.headers['x-total-count'];
         setPosts(response.data);
         setTotalPages(getTotalPages(totalCount, limit))
@@ -58,11 +58,11 @@ export default function ServerPosts() {
     };
 
     //хук для сортировки и поиска в массиве постов
-    const filteredPosts = useFilter(posts, filter)
+    //const filteredPosts = useFilter(posts, filter)
     
     React.useEffect(() => {
         fetching();
-    }, [page])
+    }, [page, filter])
 
     return (
         <Box sx={styles.box}>
@@ -77,7 +77,7 @@ export default function ServerPosts() {
             ?<Spinner />
             :<ListPosts
                 sx={styles.mainItem}
-                items={filteredPosts}
+                items={posts}
                 deleteItem={deletePost}/>
             }
             {error && <Alert severity="error">{error}</Alert>}
