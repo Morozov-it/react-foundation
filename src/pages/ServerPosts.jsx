@@ -70,10 +70,7 @@ export default function ServerPosts() {
     })
     
     React.useEffect(() => {
-        fetching();
-        return () => {
-            setPosts([])
-        }
+        fetching()
     }, [page])
 
     return (
@@ -91,7 +88,7 @@ export default function ServerPosts() {
                 sx={styles.mainItem}
                 items={filteredPosts}
                 deleteItem={deletePost} />
-            <div style={{height: 10}} ref={lastElement} />
+            <div style={{height: 50}} ref={lastElement} />
             {isFetching && <Spinner />}
         </Box>
     )
