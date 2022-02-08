@@ -10,7 +10,6 @@ import Alert from '@mui/material/Alert';
 //импорт компонент
 import { Spinner } from '../components/common/Spinner';
 import MyModal from '../components/common/MyModal';
-import { Paginator } from '../components/common/Paginator';
 import { ListPosts } from '../components/server/ListPosts';
 import { AddForm } from '../components/server/AddForm';
 import { PostFilter } from '../components/server/PostFilter';
@@ -81,7 +80,7 @@ export default function ServerPosts() {
                 deleteItem={deletePost}/>
             }
             {error && <Alert severity="error">{error}</Alert>}
-            <Paginator {...{setPage, page, totalPages}}/>
+            
         </Box>
     )
 };

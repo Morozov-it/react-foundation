@@ -1,6 +1,14 @@
 //import { grey } from '@mui/material/colors';
+import darkScrollbar from '@mui/material/darkScrollbar';
 
 export const customTheme = (mode) => ({
+    components: {
+        MuiCssBaseline: {
+            styleOverrides: {
+                body: mode === 'dark' ? darkScrollbar() : null,
+            },
+        },
+    },
     palette: {
     mode,
     ...(mode === 'light'

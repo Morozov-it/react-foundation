@@ -12,10 +12,12 @@ import { Navbar } from './components/common/Navbar';
 
 const styles = {
   page: {
-    minWidth: '100vw',
     minHeight: '100vh',
     bgcolor: 'background.default',
-    color: 'text.primary'
+    color: 'text.primary',
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    }
   },
   container: {
     paddingTop: {
